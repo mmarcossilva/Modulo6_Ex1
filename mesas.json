@@ -1,0 +1,1 @@
+[{"id":3,"pedidos":[],"valorConsumido":0.0},{"id":2,"pedidos":[{"id":2,"mesaId":2,"pratos":[{"id":6,"preco":20.0,"descricao":"camarao","quantidade":5},{"id":4,"preco":200.0,"descricao":"peixe","quantidade":5},{"id":5,"preco":2000.0,"descricao":"lula","quantidade":5}],"valorTotal":2220.0}],"valorConsumido":2220.0},{"id":1,"pedidos":[],"valorConsumido":1110.0}]

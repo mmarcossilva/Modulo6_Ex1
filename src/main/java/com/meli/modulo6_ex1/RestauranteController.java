@@ -1,5 +1,8 @@
 package com.meli.modulo6_ex1;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -7,26 +10,28 @@ import java.util.List;
 @RestController
 public class RestauranteController {
 
-    PedidoService pedidoService = new PedidoService();
+    @Autowired
+    PedidoService pedidoService;
 
     @PostMapping("/pedido")
-    public Pedido insertPedido(@RequestBody Pedido pedido){
-        return pedidoService.salvarPedidos(pedido);
+    public ResponseEntity<Pedido> insertPedido(@RequestBody Pedido pedido){
+        return new ResponseEntity<>(pedidoService.salvarPedidos(pedido), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/pedidos/{mesaId}")
-    public PedidosDTO getPedidosMesa(@PathVariable int mesaId){
-        return new PedidosDTO(pedidoService.getPedidosDaMesa(mesaId), pedidoService.getTotalMesa(mesaId));
+    public ResponseEntity<PedidosDTO> getPedidosMesa(@PathVariable int mesaId){
+        return new ResponseEntity<>(new PedidosDTO(pedidoService.getPedidosDaMesa(mesaId), pedidoService.getTotalMesa(mesaId)), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/fechamento/{mesaId}")
-    public void fecharMesa(@PathVariable int mesaId){
+    @DeleteMapping("/fechamento/{mesaId}")
+    public ResponseEntity<String> fecharMesa(@PathVariable int mesaId){
         pedidoService.removerPedidos(mesaId);
+        return new ResponseEntity<>("Pedidos da mesa " + mesaId + " foram excluidos", HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/caixa")
-    public double getCaixa(){
-        return pedidoService.getCaixa();
+    public ResponseEntity<Double> getCaixa(){
+        return new ResponseEntity<>(pedidoService.getCaixa(), HttpStatus.ACCEPTED);
     }
 
 }
